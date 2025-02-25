@@ -1,0 +1,3 @@
+redirects:  
+  examplemod: modded_server
+default-server: vanilla_server
