@@ -90,6 +90,7 @@ public class VelocityModRedirect {
     public void onPlayerLogin(LoginEvent event) {
         Player player = event.getPlayer();
         Optional<ModInfo> modInfo = player.getModInfo();
+        //logger.info(modInfo.get().getMods());
 
         Set<String> modList = modInfo.map(info ->
                 info.getMods().stream()
@@ -97,7 +98,7 @@ public class VelocityModRedirect {
                     .collect(Collectors.toSet())
         ).orElse(Set.of());
 
-        logger.info("玩家 {} 已加入，檢測到的模組: {}", player.getUsername(), modList);
+        logger.info("玩家 {} 已加入，檢測到的模組: {}", player.getUsername(), modInfo.get().getMods());
 
         String targetServer = getTargetServer(modList);
 
