@@ -28,7 +28,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-@Plugin(id = "velocitymodredirect", name = "VelocityModRedirect", version = "1.0", authors = {"SteveBell"})
+@Plugin(id = "velocitymodredirect", name = "VelocityModRedirect", version = "1.0", authors = {"小誠"})
 public class VelocityModRedirect {
     private final ProxyServer server;
     private final Logger logger;
@@ -39,7 +39,7 @@ public class VelocityModRedirect {
         this.server = server;
         this.logger = logger;
         this.config = loadConfig();
-        logger.info("BDSTW 模組包轉向器已啟動! By 小誠");
+        logger.info("BDSTW 模組包轉向器已啟動!");
     }
 
     @ConfigSerializable
@@ -112,6 +112,24 @@ public class VelocityModRedirect {
             });
         }).delay(1, TimeUnit.SECONDS).schedule();
     }
+    
+    private String getTargetServer(Set<String> modList) {
+        try {
+            RedirectConfig redirectConfig = config.get(RedirectConfig.class);
+
+            for (String mod : modList) {
+                String target = redirectConfig.getRedirects().get(mod);
+                if (target != null) {
+                    return target;
+                }
+            }
+            return redirectConfig.getDefaultServer();
+        } catch (org.spongepowered.configurate.serialize.SerializationException e) {
+            logger.error("設定檔序列化錯誤", e);
+            // 這裡可以選擇一個備用伺服器，或者其他錯誤處理方式
+            return "lobby"; // 例如，如果出錯就導向 lobby
+        }
+    }
 
     @Subscribe
     public void onPlayerChooseInitialServer(PlayerChooseInitialServerEvent event) {
@@ -128,15 +146,5 @@ public class VelocityModRedirect {
         } else {
             logger.warn("目標伺服器 {} 不存在!", targetServerName);
         }
-    }
-
-    private String getTargetServer(Set<String> modList) {
-        for (String mod : modList) {
-            String target = config.node("redirects", mod).getString(null);
-            if (target != null) {
-                return target;
-            }
-        }
-        return config.node("default-server").getString("vanilla_server");
     }
 }
