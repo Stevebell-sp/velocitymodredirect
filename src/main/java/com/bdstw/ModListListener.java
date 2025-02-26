@@ -1,5 +1,5 @@
 // ModListListener.java
-package com.stevebell.velocitymodredirect;
+package com.bdstw.velocitymodredirect;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
