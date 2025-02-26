@@ -1,4 +1,3 @@
-// ModListListener.java
 package com.bdstw.velocitymodredirect;
 
 import com.velocitypowered.api.event.Subscribe;
