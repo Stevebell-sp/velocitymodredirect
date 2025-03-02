@@ -1,8 +1,0 @@
-name = "VelocityModRedirect" 
-id = "velocitymodredirect"
-version = "1.0-SNAPSHOT"
-authors = ["小誠"]
-url = "https://github.com/Stevebell-sp/velocitymodredirect"
-description = "A Velocity plugin to redirect players based on mods."
-
-main = "com.bdstw.velocitymodredirect.ModList"
